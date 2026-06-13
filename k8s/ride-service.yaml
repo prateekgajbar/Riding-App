@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-service
+  name: ride-service
   namespace: ride-platform
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-service
+      app: ride-service
   template:
     metadata:
       labels:
-        app: auth-service
+        app: ride-service
     spec:
       containers:
-      - name: auth-service
-        image: pratikgajbar/auth-service:latest
+      - name: ride-service
+        image: pratikgajbar/ride-service:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8081
+        - containerPort: 8084
         envFrom:
         - secretRef:
             name: postgres-secret
@@ -26,11 +26,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: ride-service
   namespace: ride-platform
 spec:
   selector:
-    app: auth-service
+    app: ride-service
   ports:
-  - port: 8081
-    targetPort: 8081
+  - port: 8084
+    targetPort: 8084
